@@ -3,7 +3,8 @@
 Use the iTunes affiliate API to develop a simple music player app that lets you search by artist and 
 displays the search results on the screen. When a song is selected from the list, the song should start to play.
 ______________________________________________________
-# Supported devices. - tested with Android Emulator 
+# Supported devices - 
+tested with Android Emulator 
 ______________________________________________________
 # Supported features - 
 ______________________________________________________
