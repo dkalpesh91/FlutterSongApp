@@ -1,15 +1,11 @@
 # song_app
 
-A new Flutter application.
-
-## Getting Started
-
 Use the iTunes affiliate API to develop a simple music player app that lets you search by artist and 
 displays the search results on the screen. When a song is selected from the list, the song should start to play.
 ______________________________________________________
-Supported devices. - tested with Android Emulator 
+# Supported devices. - tested with Android Emulator 
 ______________________________________________________
-Supported features - 
+# Supported features - 
 ______________________________________________________
 Name: Pixel_3a_API_30_x86
 CPU/ABI: Google APIs Intel Atom (x86)
@@ -21,7 +17,7 @@ runtime.network.speed: full
 hw.accelerometer: yes
 hw.device.name: pixel_3a 
 ______________________________________________________
-Requirements to build the app : 
+# Requirements to build the app : 
 Below dependency Used :
   provider: 4.1.2 - Used Provider for State Management 
   audioplayers: ^0.15.1 - Used to play song
@@ -29,7 +25,7 @@ Below dependency Used :
   flutter_vector_icons: ^0.2.1 - Used Icons Library
   flutter_spinkit: ^2.1.0 - To show played song with spin animation
 ______________________________________________________  
-Instructions to build and deploy the app. 
+# Instructions to build and deploy the app. 
 
 Steps - 
 1) 'Pub get' to get all dependencies
