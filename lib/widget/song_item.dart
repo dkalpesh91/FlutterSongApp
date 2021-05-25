@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:song_app/model/song_list_model.dart';
 import 'package:song_app/services/song_provider.dart';
 
+// This class will show song item
 class SongItemWidget extends StatefulWidget {
   final Results songModel;
 
@@ -24,6 +25,7 @@ class _SongItemWidgetState extends State<SongItemWidget> {
     return _buildSongRow();
   }
 
+  // This widget will create song item view
   Widget _buildSongRow() {
     var playerProvider = Provider.of<SongProvider>(context, listen: false);
     playerProvider.resetStreams();
@@ -38,6 +40,7 @@ class _SongItemWidgetState extends State<SongItemWidget> {
     return getSongItem(playerProvider, isSelectedSong);
   }
 
+  // This widget will create song item view
   Widget getSongItem(SongProvider playerProvider, bool isSelectedSong) {
     return ListTile(
       title: Column(
@@ -87,6 +90,7 @@ class _SongItemWidgetState extends State<SongItemWidget> {
     );
   }
 
+  // This widget will show artist image
   Widget _image(url, {size}) {
     return Container(
       child: ClipRRect(
@@ -118,9 +122,11 @@ class _SongItemWidgetState extends State<SongItemWidget> {
   Widget _buildPlayStopIcon(SongProvider playerProvider, bool _isSelectedSong) {
     return IconButton(
       icon: _buildAudioButton(playerProvider, _isSelectedSong),
+      onPressed: () {},
     );
   }
 
+  // This widget will show Spink view
   getSpinkKit() {
     return SpinKitWave(
       color: Color(0xFF5eb0e5),
@@ -128,6 +134,7 @@ class _SongItemWidgetState extends State<SongItemWidget> {
     );
   }
 
+  // This widget will show Spink view
   Widget _buildAudioButton(SongProvider model, _isSelectedSong) {
     if (_isSelectedSong) {
       if (model.isLoading()) {

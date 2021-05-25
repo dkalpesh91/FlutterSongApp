@@ -7,6 +7,7 @@ import 'package:song_app/services/song_download_service.dart';
 
 enum SongPlayerState { LOADING, STOPPED, PLAYING, PAUSED, COMPLETED }
 
+// This class will provide data and notify when data changes
 class SongProvider with ChangeNotifier {
   AudioPlayer _audioPlayer;
   Results _songDetails;
@@ -31,6 +32,7 @@ class SongProvider with ChangeNotifier {
     _initStreams();
   }
 
+  // This will initialize stream
   void _initStreams() {
     if (_songDetails == null) {
       if (_songList != null && _songList.length > 0) {
@@ -39,10 +41,12 @@ class SongProvider with ChangeNotifier {
     }
   }
 
+  // This will reset stream
   void resetStreams() {
     _initStreams();
   }
 
+  // This will initialize audio plugin
   void initAudioPlugin() {
     if (_playerState == SongPlayerState.STOPPED) {
       _audioPlayer = new AudioPlayer();
@@ -51,6 +55,7 @@ class SongProvider with ChangeNotifier {
     }
   }
 
+  // This will set audio player
   setAudioPlayer(Results music) async {
     _songDetails = music;
 
@@ -58,6 +63,7 @@ class SongProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  // This will initialize audio player
   initAudioPlayer() async {
     updatePlayerState(SongPlayerState.LOADING);
 
@@ -115,6 +121,7 @@ class SongProvider with ChangeNotifier {
     return getPlayerState() == SongPlayerState.STOPPED;
   }
 
+  // This will fetch all songs
   fetchAllSongs({
     String searchQuery = "",
   }) async {

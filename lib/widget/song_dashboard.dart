@@ -8,6 +8,7 @@ import 'package:song_app/services/song_provider.dart';
 import 'package:song_app/widget/now_playing.dart';
 import 'package:song_app/widget/song_list.dart';
 
+// This class will show Song list
 class SongDashBoardWidget extends StatefulWidget {
   @override
   _SongDashBoardWidgetState createState() => _SongDashBoardWidgetState();
@@ -37,6 +38,7 @@ class _SongDashBoardWidgetState extends State<SongDashBoardWidget> {
     _searchQuery.addListener(_onSearchChanged);
   }
 
+  // This method will check for user type string and perform API call
   _onSearchChanged() {
     var songsBloc = Provider.of<SongProvider>(context, listen: false);
 
@@ -72,6 +74,7 @@ class _SongDashBoardWidgetState extends State<SongDashBoardWidget> {
     );
   }
 
+  // This widget will show search bar
   Widget _searchBar() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
@@ -101,6 +104,7 @@ class _SongDashBoardWidgetState extends State<SongDashBoardWidget> {
     );
   }
 
+  // Result available then song list will show
   Widget _songsList() {
     return Consumer<SongProvider>(
       builder: (context, songModel, child) {
@@ -127,6 +131,7 @@ class _SongDashBoardWidgetState extends State<SongDashBoardWidget> {
     );
   }
 
+  // This widget will show Spink view
   getSpinkKit() {
     return SpinKitFadingCircle(
       color: Color(0xFF5eb0e5),
@@ -134,6 +139,7 @@ class _SongDashBoardWidgetState extends State<SongDashBoardWidget> {
     );
   }
 
+  // This widget will show no data view  if network not available
   Widget _noData() {
     String noDataTxt = "";
     bool showTextMessage = false;
@@ -161,6 +167,7 @@ class _SongDashBoardWidgetState extends State<SongDashBoardWidget> {
     );
   }
 
+  // This widget will show which song playing and provide controls about song
   Widget _nowPlaying() {
     var playerProvider = Provider.of<SongProvider>(context, listen: true);
     playerProvider.resetStreams();

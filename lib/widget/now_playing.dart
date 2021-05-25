@@ -3,6 +3,7 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:song_app/services/song_provider.dart';
 
+// This class will show Playing song view with controls like forward, stop and rewind
 class NowPlayingWidget extends StatefulWidget {
   final String songTitle;
   final String songImageURL;
@@ -93,6 +94,7 @@ class _NowPlayingWidgetState extends State<NowPlayingWidget>
     );
   }
 
+  // This widget create forward icon view and perform next song when click on Icon
   Widget forwardSong(SongProvider playerProvider) {
     return InkWell(
       child: Icon(MaterialCommunityIcons.fast_forward,
@@ -112,6 +114,7 @@ class _NowPlayingWidgetState extends State<NowPlayingWidget>
     );
   }
 
+  // This widget create Stop icon view and perform Stop song when click on Icon
   Widget stopSong(SongProvider playerProvider) {
     return Container(
       width: 50.0,
@@ -131,6 +134,7 @@ class _NowPlayingWidgetState extends State<NowPlayingWidget>
     );
   }
 
+  // This widget create rewind icon view and perform previous song when click on Icon
   Widget getRewindView(SongProvider playerProvider) {
     return InkWell(
         child: Icon(MaterialCommunityIcons.rewind,
@@ -148,6 +152,7 @@ class _NowPlayingWidgetState extends State<NowPlayingWidget>
         });
   }
 
+  // This widget show slider view
   Widget getSlider(SongProvider playerProvider) {
     return Slider(
         value: progressValue,
