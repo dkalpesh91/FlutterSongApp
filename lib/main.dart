@@ -4,10 +4,10 @@ import 'package:song_app/services/song_provider.dart';
 import 'package:song_app/widget/song_dashboard.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(SongApp());
 }
 
-class MyApp extends StatelessWidget {
+class SongApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {

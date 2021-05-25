@@ -71,77 +71,16 @@ class _NowPlayingWidgetState extends State<NowPlayingWidget>
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
-                                InkWell(
-                                    child: Icon(MaterialCommunityIcons.rewind,
-                                        size: 30.0, color: Color(0xFFFE1483)),
-                                    onTap: () {
-                                      int indexOfSong = playerProvider
-                                          .allSongList
-                                          .indexWhere((song) =>
-                                              song.trackId ==
-                                              playerProvider
-                                                  .currentSong.trackId);
-                                      if (0 == indexOfSong) {
-                                        return;
-                                      }
-                                      playerProvider.initAudioPlugin();
-                                      playerProvider.setAudioPlayer(
-                                          playerProvider
-                                              .allSongList[indexOfSong - 1]);
-                                      playerProvider.playSong();
-                                    }),
-                                Container(
-                                  width: 50.0,
-                                  height: 50.0,
-                                  decoration: BoxDecoration(
-                                      color: Color(0xFFFE1483),
-                                      shape: BoxShape.circle),
-                                  child: IconButton(
-                                    icon: Icon(
-                                      Icons.stop,
-                                      size: 30.0,
-                                      color: Colors.white,
-                                    ),
-                                    onPressed: () {
-                                      playerProvider.stopSong();
-                                    },
-                                  ),
-                                ),
-                                InkWell(
-                                  child: Icon(
-                                      MaterialCommunityIcons.fast_forward,
-                                      size: 30.0,
-                                      color: Color(0xFFFE1483)),
-                                  onTap: () {
-                                    int indexOfSong = playerProvider.allSongList
-                                        .indexWhere((song) =>
-                                            song.trackId ==
-                                            playerProvider.currentSong.trackId);
-                                    int songListLength =
-                                        playerProvider.allSongList.length;
-                                    if (songListLength == indexOfSong) {
-                                      return;
-                                    }
-                                    playerProvider.initAudioPlugin();
-                                    playerProvider.setAudioPlayer(playerProvider
-                                        .allSongList[indexOfSong + 1]);
-                                    playerProvider.playSong();
-                                  },
-                                )
+                                getRewindView(playerProvider),
+                                stopSong(playerProvider),
+                                forwardSong(playerProvider)
                               ],
                             ),
                           ),
                         ),
                       ),
                       Container(
-                        child: Slider(
-                            value: progressValue,
-                            min: 0.0,
-                            activeColor: Color(0xFFFE1483),
-                            inactiveColor: Color(0xFFFE1483),
-                            max: playerProvider.currentSong.trackTimeMillis
-                                .toDouble(),
-                            onChanged: (double value) {}),
+                        child: getSlider(playerProvider),
                       )
                     ],
                   ),
@@ -152,5 +91,70 @@ class _NowPlayingWidgetState extends State<NowPlayingWidget>
         ),
       ),
     );
+  }
+
+  Widget forwardSong(SongProvider playerProvider) {
+    return InkWell(
+      child: Icon(MaterialCommunityIcons.fast_forward,
+          size: 30.0, color: Color(0xFFFE1483)),
+      onTap: () {
+        int indexOfSong = playerProvider.allSongList.indexWhere(
+            (song) => song.trackId == playerProvider.currentSong.trackId);
+        int songListLength = playerProvider.allSongList.length;
+        if (songListLength == indexOfSong) {
+          return;
+        }
+        playerProvider.initAudioPlugin();
+        playerProvider
+            .setAudioPlayer(playerProvider.allSongList[indexOfSong + 1]);
+        playerProvider.playSong();
+      },
+    );
+  }
+
+  Widget stopSong(SongProvider playerProvider) {
+    return Container(
+      width: 50.0,
+      height: 50.0,
+      decoration:
+          BoxDecoration(color: Color(0xFFFE1483), shape: BoxShape.circle),
+      child: IconButton(
+        icon: Icon(
+          Icons.stop,
+          size: 30.0,
+          color: Colors.white,
+        ),
+        onPressed: () {
+          playerProvider.stopSong();
+        },
+      ),
+    );
+  }
+
+  Widget getRewindView(SongProvider playerProvider) {
+    return InkWell(
+        child: Icon(MaterialCommunityIcons.rewind,
+            size: 30.0, color: Color(0xFFFE1483)),
+        onTap: () {
+          int indexOfSong = playerProvider.allSongList.indexWhere(
+              (song) => song.trackId == playerProvider.currentSong.trackId);
+          if (0 == indexOfSong) {
+            return;
+          }
+          playerProvider.initAudioPlugin();
+          playerProvider
+              .setAudioPlayer(playerProvider.allSongList[indexOfSong - 1]);
+          playerProvider.playSong();
+        });
+  }
+
+  Widget getSlider(SongProvider playerProvider) {
+    return Slider(
+        value: progressValue,
+        min: 0.0,
+        activeColor: Color(0xFFFE1483),
+        inactiveColor: Color(0xFFFE1483),
+        max: playerProvider.currentSong.trackTimeMillis.toDouble(),
+        onChanged: (double value) {});
   }
 }

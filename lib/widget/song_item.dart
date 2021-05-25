@@ -27,14 +27,18 @@ class _SongItemWidgetState extends State<SongItemWidget> {
   Widget _buildSongRow() {
     var playerProvider = Provider.of<SongProvider>(context, listen: false);
     playerProvider.resetStreams();
-    bool _isSelectedRadio;
+    bool isSelectedSong;
     if (playerProvider.currentSong == null) {
-      _isSelectedRadio = false;
+      isSelectedSong = false;
     } else {
-      _isSelectedRadio =
+      isSelectedSong =
           this.widget.songModel.trackId == playerProvider.currentSong.trackId;
     }
 
+    return getSongItem(playerProvider, isSelectedSong);
+  }
+
+  Widget getSongItem(SongProvider playerProvider, bool isSelectedSong) {
     return ListTile(
       title: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -64,7 +68,7 @@ class _SongItemWidgetState extends State<SongItemWidget> {
         children: <Widget>[
           _buildPlayStopIcon(
             playerProvider,
-            _isSelectedRadio,
+            isSelectedSong,
           ),
         ],
       ),

@@ -3,9 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
+import 'package:song_app/model/song_list_model.dart';
 import 'package:song_app/services/song_provider.dart';
 import 'package:song_app/widget/now_playing.dart';
-import 'package:song_app/widget/song_item.dart';
+import 'package:song_app/widget/song_list.dart';
 
 class SongDashBoardWidget extends StatefulWidget {
   @override
@@ -16,8 +17,6 @@ class _SongDashBoardWidgetState extends State<SongDashBoardWidget> {
   final _searchQuery = new TextEditingController();
   Timer _debounce;
   bool isDataRequested = false;
-
-  Future<double> get _width => Future<double>.value(200);
 
   @override
   void dispose() {
@@ -106,25 +105,9 @@ class _SongDashBoardWidgetState extends State<SongDashBoardWidget> {
     return Consumer<SongProvider>(
       builder: (context, songModel, child) {
         if (songModel.allSongList.length > 0) {
-          return new Expanded(
-            child: Padding(
-              child: ListView(
-                children: <Widget>[
-                  ListView.separated(
-                      itemCount: songModel.allSongList.length,
-                      physics: ScrollPhysics(),
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return SongItemWidget(
-                            songModel: songModel.allSongList[index]);
-                      },
-                      separatorBuilder: (context, index) {
-                        return Divider();
-                      })
-                ],
-              ),
-              padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
-            ),
+          List<Results> songList = songModel.allSongList;
+          return SongList(
+            songList: songList,
           );
         }
 
