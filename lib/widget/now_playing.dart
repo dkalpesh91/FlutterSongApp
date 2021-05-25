@@ -141,9 +141,7 @@ class _NowPlayingWidgetState extends State<NowPlayingWidget>
                             inactiveColor: Color(0xFFFE1483),
                             max: playerProvider.currentSong.trackTimeMillis
                                 .toDouble(),
-                            onChanged: (double value) {
-                              setState(() => progressValue = value);
-                            }),
+                            onChanged: (double value) {}),
                       )
                     ],
                   ),
