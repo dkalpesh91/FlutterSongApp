@@ -37,12 +37,12 @@ class _SongDashBoardWidgetState extends State<SongDashBoardWidget> {
   }
 
   _onSearchChanged() {
-    var SongsBloc = Provider.of<SongProvider>(context, listen: false);
+    var songsBloc = Provider.of<SongProvider>(context, listen: false);
 
     if (_debounce?.isActive ?? false) _debounce.cancel();
     _debounce = Timer(const Duration(milliseconds: 500), () {
       isDataRequested = true;
-      SongsBloc.fetchAllSongs(
+      songsBloc.fetchAllSongs(
         searchQuery: _searchQuery.text,
       );
     });

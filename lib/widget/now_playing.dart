@@ -19,11 +19,6 @@ class _NowPlayingWidgetState extends State<NowPlayingWidget> {
 
   @override
   void initState() {
-    // Future.delayed(Duration(seconds: 1)).then((_) {
-    //   setState(() {
-    //     progressValue = progressValue + 1;
-    //   });
-    // });
     super.initState();
   }
 
@@ -132,49 +127,6 @@ class _NowPlayingWidgetState extends State<NowPlayingWidget> {
           ),
         ),
       ),
-    );
-  }
-
-  Widget _image(url, {size}) {
-    return Container(
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(10.0),
-        child: Image.network(url),
-      ),
-      height: size == null ? 55 : size,
-      width: size == null ? 55 : size,
-      decoration: BoxDecoration(
-        color: Color(0xFFFFE5EC),
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(10),
-          topRight: Radius.circular(10),
-          bottomLeft: Radius.circular(10),
-          bottomRight: Radius.circular(10),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 1,
-            blurRadius: 3,
-            offset: Offset(0, 3), // changes position of shadow
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildStopIcon(BuildContext context) {
-    var playerProvider = Provider.of<SongProvider>(context, listen: false);
-
-    return IconButton(
-      icon: Icon(
-        MaterialCommunityIcons.pause_circle,
-        size: 30,
-      ),
-      color: Color(0xFFffffff),
-      onPressed: () {
-        playerProvider.stopSong();
-      },
     );
   }
 }
