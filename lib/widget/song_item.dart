@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:song_app/model/song_list_model.dart';
 import 'package:song_app/services/song_provider.dart';
@@ -69,6 +68,18 @@ class _SongItemWidgetState extends State<SongItemWidget> {
           ),
         ],
       ),
+      onTap: () {
+        if (!playerProvider.isStopped()) {
+          playerProvider.stopSong();
+        } else {
+          if (!playerProvider.isLoading()) {
+            playerProvider.initAudioPlugin();
+            playerProvider.setAudioPlayer(this.widget.songModel);
+
+            playerProvider.playSong();
+          }
+        }
+      },
     );
   }
 
@@ -103,18 +114,6 @@ class _SongItemWidgetState extends State<SongItemWidget> {
   Widget _buildPlayStopIcon(SongProvider playerProvider, bool _isSelectedSong) {
     return IconButton(
       icon: _buildAudioButton(playerProvider, _isSelectedSong),
-      onPressed: () {
-        if (!playerProvider.isStopped() && _isSelectedSong) {
-          playerProvider.stopSong();
-        } else {
-          if (!playerProvider.isLoading()) {
-            playerProvider.initAudioPlugin();
-            playerProvider.setAudioPlayer(this.widget.songModel);
-
-            playerProvider.playSong();
-          }
-        }
-      },
     );
   }
 
@@ -140,12 +139,10 @@ class _SongItemWidgetState extends State<SongItemWidget> {
       }
 
       if (model.isStopped()) {
-        return Icon(MaterialCommunityIcons.play_circle,
-            size: 30, color: Color(0xFF5eb0e5));
+        return Offstage();
       }
     } else {
-      return Icon(MaterialCommunityIcons.play_circle,
-          size: 30, color: Color(0xFF5eb0e5));
+      return Offstage();
     }
 
     return new Container();
