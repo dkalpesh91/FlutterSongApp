@@ -17,6 +17,8 @@ class _SongDashBoardWidgetState extends State<SongDashBoardWidget> {
   Timer _debounce;
   bool isDataRequested = false;
 
+  Future<double> get _width => Future<double>.value(200);
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -189,11 +191,10 @@ class _SongDashBoardWidgetState extends State<SongDashBoardWidget> {
       trackImage = playerProvider.currentSong.artworkUrl100;
     }
     return Visibility(
-      visible: playerProvider.getPlayerState() == SongPlayerState.PLAYING,
-      child: NowPlayingWidget(
-        songTitle: trackName,
-        songImageURL: trackImage,
-      ),
-    );
+        visible: playerProvider.getPlayerState() == SongPlayerState.PLAYING,
+        child: NowPlayingWidget(
+          songTitle: trackName,
+          songImageURL: trackImage,
+        ));
   }
 }
