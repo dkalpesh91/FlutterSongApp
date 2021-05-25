@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:song_app/model/song_list_model.dart';
 import 'package:song_app/widget/song_item.dart';
 
+// This class will show list of song
 class SongList extends StatelessWidget {
   final List<Results> songList;
 
