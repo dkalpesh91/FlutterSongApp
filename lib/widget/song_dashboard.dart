@@ -53,7 +53,7 @@ class _SongDashBoardWidgetState extends State<SongDashBoardWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final Color green = Color(0xFF5eb0e5);
+    final Color green = Color(0xFFFE1483);
     return Scaffold(
       backgroundColor: Color(0xFFf3f3f3),
       appBar: AppBar(
@@ -134,7 +134,7 @@ class _SongDashBoardWidgetState extends State<SongDashBoardWidget> {
   // This widget will show Spink view
   getSpinkKit() {
     return SpinKitFadingCircle(
-      color: Color(0xFF5eb0e5),
+      color: Color(0xFFFE1483),
       size: 30.0,
     );
   }

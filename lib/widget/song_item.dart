@@ -78,6 +78,12 @@ class _SongItemWidgetState extends State<SongItemWidget> {
       onTap: () {
         if (!playerProvider.isStopped()) {
           playerProvider.stopSong();
+          if (!playerProvider.isLoading()) {
+            playerProvider.initAudioPlugin();
+            playerProvider.setAudioPlayer(this.widget.songModel);
+
+            playerProvider.playSong();
+          }
         } else {
           if (!playerProvider.isLoading()) {
             playerProvider.initAudioPlugin();
@@ -129,7 +135,7 @@ class _SongItemWidgetState extends State<SongItemWidget> {
   // This widget will show Spink view
   getSpinkKit() {
     return SpinKitWave(
-      color: Color(0xFF5eb0e5),
+      color: Color(0xFFFE1483),
       size: 20.0,
     );
   }

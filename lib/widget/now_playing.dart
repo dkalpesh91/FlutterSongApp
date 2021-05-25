@@ -49,7 +49,7 @@ class _NowPlayingWidgetState extends State<NowPlayingWidget>
           position: offset,
           child: Container(
             padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(color: Color(0xFF5eb0e5)),
+            // decoration: BoxDecoration(color: Color(0xFFFE1483)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
