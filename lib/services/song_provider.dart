@@ -125,7 +125,8 @@ class SongProvider with ChangeNotifier {
         searchQuery +
         "&entity=musicArtist" +
         "&entity=song";
-    SongListModel model = await SongDownloadService.fetchAllSongs(urlfor);
+    SongDownloadService songDownloadService = SongDownloadService();
+    SongListModel model = await songDownloadService.fetchAllSongs(urlfor);
 
     if (model != null && model.results.length > 0) {
       allSongList.addAll(model.results);
