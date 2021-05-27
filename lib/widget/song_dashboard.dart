@@ -111,6 +111,7 @@ class _SongDashBoardWidgetState extends State<SongDashBoardWidget> {
         if (songModel.allSongList.length > 0) {
           List<Results> songList = songModel.allSongList;
           return SongList(
+            playerProvider: songModel,
             songList: songList,
           );
         }

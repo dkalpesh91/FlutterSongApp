@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:provider/provider.dart';
 import 'package:song_app/model/song_list_model.dart';
 import 'package:song_app/services/song_provider.dart';
 
 // This class will show song item
 class SongItemWidget extends StatefulWidget {
   final Results songModel;
+  final SongProvider playerProvider;
 
-  SongItemWidget({Key key, this.songModel}) : super(key: key);
+  SongItemWidget({Key key, this.songModel, this.playerProvider})
+      : super(key: key);
 
   @override
   _SongItemWidgetState createState() => _SongItemWidgetState();
@@ -27,72 +28,80 @@ class _SongItemWidgetState extends State<SongItemWidget> {
 
   // This widget will create song item view
   Widget _buildSongRow() {
-    var playerProvider = Provider.of<SongProvider>(context, listen: false);
-    playerProvider.resetStreams();
-    bool isSelectedSong;
-    if (playerProvider.currentSong == null) {
-      isSelectedSong = false;
-    } else {
-      isSelectedSong =
-          this.widget.songModel.trackId == playerProvider.currentSong.trackId;
+    bool isSelectedSong = false;
+    if (widget.playerProvider != null) {
+      widget.playerProvider.resetStreams();
+      if (widget.playerProvider.currentSong == null) {
+        isSelectedSong = false;
+      } else {
+        isSelectedSong = this.widget.songModel.trackId ==
+            widget.playerProvider.currentSong.trackId;
+      }
     }
 
-    return getSongItem(playerProvider, isSelectedSong);
+    return getSongItem(widget.playerProvider, isSelectedSong);
   }
 
   // This widget will create song item view
   Widget getSongItem(SongProvider playerProvider, bool isSelectedSong) {
-    return ListTile(
-      title: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+    return Container(
+      child: Column(
         children: [
-          Text(
-            this.widget.songModel.trackName,
-            style: new TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF182545),
+          ListTile(
+            title: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  this.widget.songModel.trackName,
+                  style: new TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF182545),
+                  ),
+                ),
+                Text(this.widget.songModel.artistName, maxLines: 2),
+                Text(
+                  this.widget.songModel.collectionName,
+                  maxLines: 2,
+                  style: TextStyle(
+                    color: Colors.grey,
+                  ),
+                ),
+              ],
             ),
-          ),
-          Text(this.widget.songModel.artistName, maxLines: 2),
-          Text(
-            this.widget.songModel.collectionName,
-            maxLines: 2,
-            style: TextStyle(
-              color: Colors.grey,
+            leading: _image(this.widget.songModel.artworkUrl100),
+            trailing: Wrap(
+              spacing: -10.0, // gap between adjacent chips
+              runSpacing: 0.0, // gap between lines
+              children: <Widget>[
+                _buildPlayStopIcon(
+                  widget.playerProvider,
+                  isSelectedSong,
+                ),
+              ],
             ),
+            onTap: () {
+              if (!widget.playerProvider.isStopped()) {
+                widget.playerProvider.stopSong();
+                if (!widget.playerProvider.isLoading()) {
+                  widget.playerProvider.initAudioPlugin();
+                  widget.playerProvider.setAudioPlayer(this.widget.songModel);
+
+                  widget.playerProvider.playSong();
+                }
+              } else {
+                if (!widget.playerProvider.isLoading()) {
+                  widget.playerProvider.initAudioPlugin();
+                  widget.playerProvider.setAudioPlayer(this.widget.songModel);
+
+                  widget.playerProvider.playSong();
+                }
+              }
+            },
           ),
+          Divider(),
         ],
       ),
-      leading: _image(this.widget.songModel.artworkUrl100),
-      trailing: Wrap(
-        spacing: -10.0, // gap between adjacent chips
-        runSpacing: 0.0, // gap between lines
-        children: <Widget>[
-          _buildPlayStopIcon(
-            playerProvider,
-            isSelectedSong,
-          ),
-        ],
-      ),
-      onTap: () {
-        if (!playerProvider.isStopped()) {
-          playerProvider.stopSong();
-          if (!playerProvider.isLoading()) {
-            playerProvider.initAudioPlugin();
-            playerProvider.setAudioPlayer(this.widget.songModel);
-
-            playerProvider.playSong();
-          }
-        } else {
-          if (!playerProvider.isLoading()) {
-            playerProvider.initAudioPlugin();
-            playerProvider.setAudioPlayer(this.widget.songModel);
-
-            playerProvider.playSong();
-          }
-        }
-      },
     );
   }
 
@@ -101,7 +110,7 @@ class _SongItemWidgetState extends State<SongItemWidget> {
     return Container(
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10.0),
-        child: Image.network(url),
+        child: url != null ? Image.network(url) : Offstage(),
       ),
       height: size == null ? 55 : size,
       width: size == null ? 55 : size,
@@ -127,7 +136,7 @@ class _SongItemWidgetState extends State<SongItemWidget> {
 
   Widget _buildPlayStopIcon(SongProvider playerProvider, bool _isSelectedSong) {
     return IconButton(
-      icon: _buildAudioButton(playerProvider, _isSelectedSong),
+      icon: _buildAudioButton(widget.playerProvider, _isSelectedSong),
       onPressed: () {},
     );
   }
@@ -143,19 +152,19 @@ class _SongItemWidgetState extends State<SongItemWidget> {
   // This widget will show Spink view
   Widget _buildAudioButton(SongProvider model, _isSelectedSong) {
     if (_isSelectedSong) {
-      if (model.isLoading()) {
+      if (model != null && model.isLoading()) {
         return Center(
           child: getSpinkKit(),
         );
       }
 
-      if (!model.isStopped()) {
+      if (model != null && !model.isStopped()) {
         return Center(
           child: getSpinkKit(),
         );
       }
 
-      if (model.isStopped()) {
+      if (model != null && model.isStopped()) {
         return Offstage();
       }
     } else {
